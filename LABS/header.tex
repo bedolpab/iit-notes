@@ -1,0 +1,529 @@
+% Static Course Definitions
+\def\npart{218L}  % Course part
+\def\nterm{Spring}  % Term (e.g., Spring, Fall)
+\def\nyear{2025}  % Year of the course
+\def\ncourse{Digital Systems Laboratory}  % Full course name
+
+% LABORATORY PARAMETERS
+\def\nexperiment{1}  % Experiment number
+\def\nexperimenttitle{Experimental Setup Using Breadboard, Basic Components, and Test Instruments} 
+
+% Title of the experiment
+\def\nlabpartners{None} % Lab partners (leave empty if none)
+\def\nta{Muyu Yang}  % Teaching Assistant (if applicable)
+\def\ndateofexperiment{January 27, 2025}  % Date of the experiment
+\def\nduedate{February 3, 2025}  % Due date of the lab report
+
+% Advanced Conditional Definitions
+\makeatletter
+% Robust author and ID handling with default fallbacks
+\ifx \nauthor\undefined
+  \def\nauthor{Pablo Cesar Bedolla Ortiz}
+  \def\idnumber{\#}
+  \def\emailcontact{pbedollaortiz@hawk.iit.edu}
+\else
+\fi
+
+% Set author with student information formatted properly
+\author{
+  \nauthor \\ % Your name
+  \idnumber \\ % Your ID
+  \emailcontact % Your email
+}
+\date{\nterm\ \nyear}
+
+% Required LaTeX Packages
+% Mathematical Packages
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathdots}
+\usepackage{siunitx}
+\usepackage{slashed}
+
+% Typesetting and Layout Packages
+\usepackage{alltt}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{multirow}
+\usepackage{pdflscape}
+\usepackage{tabularx}
+\usepackage{ulem}
+
+% Graphic and Plotting Packages
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+
+% Hyperlink and Cross-referencing Packages
+\usepackage[all]{xy}
+\usepackage{imakeidx}
+
+\usepackage[pdftex, hidelinks, 
+  pdfauthor={Pablo Cesar Bedolla Ortiz}, 
+  pdftitle={ECE \npart\ - \ncourse}]{hyperref}
+
+\title{ECE \npart\ --- \ncourse}
+
+% Title Page
+\renewcommand{\maketitle}{
+    \begin{titlepage}
+        \begin{center}
+            \large
+            \textbf{Illinois Institute of Technology} \\
+            \textit{Department of Electrical and Computer Engineering} \\[1cm]
+
+            \Large
+            \textbf{Course:} \ncourse \\
+            \textbf{Section:} ECE \npart \\[0.5cm]
+
+            \large
+            \textbf{Experiment \#:} Lab \nexperiment \\
+            \textbf{Experiment Title:} \nexperimenttitle \\[1cm]
+
+            \normalsize
+            \textbf{Student Name:} \nauthor \\
+            \textbf{Student ID:} \idnumber \\
+            \textbf{Email:} \emailcontact \\[0.5cm]
+
+            % Conditional check for Laboratory Partners (if not empty)
+            \ifx\empty\string\nlabpartners
+            \else
+                \textbf{Laboratory Partners:} \\
+                \nlabpartners \\[0.5cm]
+            \fi
+
+            \textbf{Teaching Assistant:} \nta \\[0.5cm]
+
+            \textbf{Date of Experiment:} \ndateofexperiment \\
+            \textbf{Report Due Date:} \nduedate \\[1cm]
+
+            \begin{minipage}{0.8\textwidth}
+                \centering\footnotesize
+                \textbf{Group Collaboration Statement:}
+
+                We, the undersigned, attest that every member of this group has materially 
+                contributed to the intellectual content of this report. Each member has 
+                substantively participated in the research, analysis, and writing process.
+
+                \vspace{1cm}
+                Signatures: \\ [1cm]
+                \rule{0.6\textwidth}{0.4pt} \\ [1cm]
+                \rule{0.6\textwidth}{0.4pt} \\ [1cm]
+                \rule{0.6\textwidth}{0.4pt}
+            \end{minipage}
+        \end{center}
+    \end{titlepage}
+}
+
+
+% Plot and Graphics Configuration
+\pgfplotsset{compat=1.12}
+
+% Page Style Configuration
+\pagestyle{fancyplain}
+
+
+% Conditional Course Header
+\ifx \ncoursehead \undefined
+  \def\ncoursehead{\ncourse}  % Default if course header is undefined
+\fi
+
+% Header Styling
+\pagestyle{fancy}  % Use the 'fancy' page style for header/footer customization
+\fancyhf{}  % Clear default header/footer
+
+% Right header: Course part and optional extra detail, shown on subsequent pages
+\ifx \nextra \undefined
+  \lhead{
+    \ifnum\thepage=1
+    \else
+      ECE \npart\ \ncoursehead
+    \fi}
+\else
+  \lhead{
+    \ifnum\thepage=1
+    \else
+      ECE \npart\ \ncoursehead\ (\nextra)
+    \fi}
+\fi
+
+
+% Optional: Footer for page number
+\fancyfoot[C]{\thepage}  % Centered page number in footer
+
+
+
+% TikZ Libraries
+\usetikzlibrary{arrows.meta,decorations.markings,decorations.pathmorphing}
+\usetikzlibrary{positioning,fadings,intersections,cd}
+
+% Custom Commands
+% Centered Dot Command
+\newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}
+
+% Partial Derivative Command with Optional Order
+\newcommand {\pd}[2][ ]{
+  \ifx #1 { }
+    \frac{\partial}{\partial #2}
+  \else
+    \frac{\partial^{#1}}{\partial #2^{#1}}
+  \fi
+}
+
+% HTML and PDF Export Configurations
+\ifx \nhtml \undefined
+\else
+  % Additional configurations for HTML export
+  \renewcommand\printindex{}
+  \DisableLigatures[f]{family = }
+  % ... (rest of HTML-specific configurations)
+\fi
+
+% Custom Page Geometry for 8.5 x 11 Paper
+\ifx \ntrim \undefined
+\else
+  \usepackage{geometry}
+  \geometry{
+    letterpaper,            % Set paper size to 8.5 x 11 inches
+    textwidth=6.5in,        % Adjust the text width (6.5 inches is a typical width for letter size)
+    textheight=9in,         % Adjust the text height (9 inches is typical for letter size)
+    left=1in,               % Set left margin to 1 inch
+    top=1in,                % Set top margin to 1 inch
+    right=1in               % Set right margin to 1 inch
+  }
+\fi
+
+
+
+% Theorems
+\theoremstyle{definition}
+\newtheorem*{aim}{Aim}
+\newtheorem*{axiom}{Axiom}
+\newtheorem*{claim}{Claim}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem*{defi}{Definition}
+\newtheorem*{eg}{Example}
+\newtheorem*{ex}{Exercise}
+\newtheorem*{fact}{Fact}
+\newtheorem*{law}{Law}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{notation}{Notation}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{question}{Question}
+\newtheorem*{rrule}{Rule}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{assumption}{Assumption}
+
+\newtheorem*{remark}{Remark}
+\newtheorem*{warning}{Warning}
+\newtheorem*{exercise}{Exercise}
+
+\newtheorem{nthm}{Theorem}[section]
+\newtheorem{nlemma}[nthm]{Lemma}
+\newtheorem{nprop}[nthm]{Proposition}
+\newtheorem{ncor}[nthm]{Corollary}
+
+
+\renewcommand{\labelitemi}{--}
+\renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\labelenumi}{(\roman{*})}
+
+\let\stdsection\section
+\renewcommand\section{\newpage\stdsection}
+
+\newcommand\qedsym{\hfill\ensuremath{\square}}
+% Strike through
+\def\st{\bgroup \ULdepth=-.55ex \ULset}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Maths Symbols %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Matrix groups
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Or}{\mathrm{O}}
+\newcommand{\PGL}{\mathrm{PGL}}
+\newcommand{\PSL}{\mathrm{PSL}}
+\newcommand{\PSO}{\mathrm{PSO}}
+\newcommand{\PSU}{\mathrm{PSU}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Spin}{\mathrm{Spin}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\Mat}{\mathrm{Mat}}
+
+% Matrix algebras
+\newcommand{\gl}{\mathfrak{gl}}
+\newcommand{\ort}{\mathfrak{o}}
+\newcommand{\so}{\mathfrak{so}}
+\newcommand{\su}{\mathfrak{su}}
+\newcommand{\uu}{\mathfrak{u}}
+\renewcommand{\sl}{\mathfrak{sl}}
+
+% Special sets
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\CP}{\mathbb{CP}}
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\RP}{\mathbb{RP}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\H}{\mathbb{H}}
+
+% Brackets
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\bket}[1]{\left\lvert #1\right\rangle}
+\newcommand{\brak}[1]{\left\langle #1 \right\rvert}
+\newcommand{\braket}[2]{\left\langle #1\middle\vert #2 \right\rangle}
+\newcommand{\bra}{\langle}
+\newcommand{\ket}{\rangle}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\normalorder}[1]{\mathop{:}\nolimits\!#1\!\mathop{:}\nolimits}
+\newcommand{\tv}[1]{|#1|}
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+
+% not-math
+\newcommand{\bolds}[1]{{\bfseries #1}}
+\newcommand{\cat}[1]{\mathsf{#1}}
+\newcommand{\ph}{\,\cdot\,}
+\newcommand{\term}[1]{\emph{#1}\index{#1}}
+\newcommand{\phantomeq}{\hphantom{{}={}}}
+% Probability
+\DeclareMathOperator{\Bernoulli}{Bernoulli}
+\DeclareMathOperator{\betaD}{beta}
+\DeclareMathOperator{\bias}{bias}
+\DeclareMathOperator{\binomial}{binomial}
+\DeclareMathOperator{\corr}{corr}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\gammaD}{gamma}
+\DeclareMathOperator{\mse}{mse}
+\DeclareMathOperator{\multinomial}{multinomial}
+\DeclareMathOperator{\Poisson}{Poisson}
+\DeclareMathOperator{\var}{var}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+
+% Algebra
+\DeclareMathOperator{\adj}{adj}
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\disc}{disc}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\fix}{fix}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\image}{image}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Tr}{Tr}
+\newcommand{\Bilin}{\mathrm{Bilin}}
+\newcommand{\Frob}{\mathrm{Frob}}
+
+% Others
+\newcommand\ad{\mathrm{ad}}
+\newcommand\Art{\mathrm{Art}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\Der}{\mathrm{Der}}
+\newcommand{\D}{\mathrm{D}}
+\newcommand{\dR}{\mathrm{dR}}
+\newcommand{\exterior}{\mathchoice{{\textstyle\bigwedge}}{{\bigwedge}}{{\textstyle\wedge}}{{\scriptstyle\wedge}}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\Gr}{\mathrm{Gr}}
+\newcommand{\haut}{\mathrm{ht}}
+\newcommand{\Hol}{\mathrm{Hol}}
+\newcommand{\hol}{\mathfrak{hol}}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\lie}[1]{\mathfrak{#1}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\Oc}{\mathcal{O}}
+\newcommand{\pr}{\mathrm{pr}}
+\newcommand{\Ps}{\mathcal{P}}
+\newcommand{\pt}{\mathrm{pt}}
+\newcommand{\qeq}{\mathrel{``{=}"}}
+\newcommand{\Rs}{\mathcal{R}}
+\newcommand{\Vect}{\mathrm{Vect}}
+\newcommand{\wsto}{\stackrel{\mathrm{w}^*}{\to}}
+\newcommand{\wt}{\mathrm{wt}}
+\newcommand{\wto}{\stackrel{\mathrm{w}}{\to}}
+\renewcommand{\d}{\mathrm{d}}
+\renewcommand{\P}{\mathbb{P}}
+%\renewcommand{\F}{\mathcal{F}}
+
+
+\let\Im\relax
+\let\Re\relax
+
+\DeclareMathOperator{\area}{area}
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\ccl}{ccl}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\cls}{\overline{\mathrm{span}}}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\cosec}{cosec}
+\DeclareMathOperator{\cosech}{cosech}
+\DeclareMathOperator{\covol}{covol}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\Diff}{Diff}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\energy}{energy}
+\DeclareMathOperator{\erfc}{erfc}
+\DeclareMathOperator{\erf}{erf}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\fst}{fst}
+\DeclareMathOperator{\Fit}{Fit}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\hcf}{hcf}
+\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Isom}{Isom}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\length}{length}
+\DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\like}{like}
+\DeclareMathOperator{\Lk}{Lk}
+\DeclareMathOperator{\Maps}{Maps}
+\DeclareMathOperator{\orb}{orb}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\otp}{otp}
+\DeclareMathOperator{\poly}{poly}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\rel}{rel}
+\DeclareMathOperator{\Rad}{Rad}
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator*{\res}{res}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Rees}{Rees}
+\DeclareMathOperator{\Root}{Root}
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\snd}{snd}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\stab}{stab}
+\DeclareMathOperator{\St}{St}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Syl}{Syl}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\vol}{vol}
+
+\pgfarrowsdeclarecombine{twolatex'}{twolatex'}{latex'}{latex'}{latex'}{latex'}
+\tikzset{->/.style = {decoration={markings,
+                                  mark=at position 1 with {\arrow[scale=2]{latex'}}},
+                      postaction={decorate}}}
+\tikzset{<-/.style = {decoration={markings,
+                                  mark=at position 0 with {\arrowreversed[scale=2]{latex'}}},
+                      postaction={decorate}}}
+\tikzset{<->/.style = {decoration={markings,
+                                   mark=at position 0 with {\arrowreversed[scale=2]{latex'}},
+                                   mark=at position 1 with {\arrow[scale=2]{latex'}}},
+                       postaction={decorate}}}
+\tikzset{->-/.style = {decoration={markings,
+                                   mark=at position #1 with {\arrow[scale=2]{latex'}}},
+                       postaction={decorate}}}
+\tikzset{-<-/.style = {decoration={markings,
+                                   mark=at position #1 with {\arrowreversed[scale=2]{latex'}}},
+                       postaction={decorate}}}
+\tikzset{->>/.style = {decoration={markings,
+                                  mark=at position 1 with {\arrow[scale=2]{latex'}}},
+                      postaction={decorate}}}
+\tikzset{<<-/.style = {decoration={markings,
+                                  mark=at position 0 with {\arrowreversed[scale=2]{twolatex'}}},
+                      postaction={decorate}}}
+\tikzset{<<->>/.style = {decoration={markings,
+                                   mark=at position 0 with {\arrowreversed[scale=2]{twolatex'}},
+                                   mark=at position 1 with {\arrow[scale=2]{twolatex'}}},
+                       postaction={decorate}}}
+\tikzset{->>-/.style = {decoration={markings,
+                                   mark=at position #1 with {\arrow[scale=2]{twolatex'}}},
+                       postaction={decorate}}}
+\tikzset{-<<-/.style = {decoration={markings,
+                                   mark=at position #1 with {\arrowreversed[scale=2]{twolatex'}}},
+                       postaction={decorate}}}
+
+\tikzset{circ/.style = {fill, circle, inner sep = 0, minimum size = 3}}
+\tikzset{scirc/.style = {fill, circle, inner sep = 0, minimum size = 1.5}}
+\tikzset{mstate/.style={circle, draw, blue, text=black, minimum width=0.7cm}}
+
+\tikzset{eqpic/.style={baseline={([yshift=-.5ex]current bounding box.center)}}}
+\tikzset{commutative diagrams/.cd,cdmap/.style={/tikz/column 1/.append style={anchor=base east},/tikz/column 2/.append style={anchor=base west},row sep=tiny}}
+
+\definecolor{mblue}{rgb}{0.2, 0.3, 0.8}
+\definecolor{morange}{rgb}{1, 0.5, 0}
+\definecolor{mgreen}{rgb}{0.1, 0.4, 0.2}
+\definecolor{mred}{rgb}{0.5, 0, 0}
+
+\def\drawcirculararc(#1,#2)(#3,#4)(#5,#6){%
+    \pgfmathsetmacro\cA{(#1*#1+#2*#2-#3*#3-#4*#4)/2}%
+    \pgfmathsetmacro\cB{(#1*#1+#2*#2-#5*#5-#6*#6)/2}%
+    \pgfmathsetmacro\cy{(\cB*(#1-#3)-\cA*(#1-#5))/%
+                        ((#2-#6)*(#1-#3)-(#2-#4)*(#1-#5))}%
+    \pgfmathsetmacro\cx{(\cA-\cy*(#2-#4))/(#1-#3)}%
+    \pgfmathsetmacro\cr{sqrt((#1-\cx)*(#1-\cx)+(#2-\cy)*(#2-\cy))}%
+    \pgfmathsetmacro\cA{atan2(#2-\cy,#1-\cx)}%
+    \pgfmathsetmacro\cB{atan2(#6-\cy,#5-\cx)}%
+    \pgfmathparse{\cB<\cA}%
+    \ifnum\pgfmathresult=1
+        \pgfmathsetmacro\cB{\cB+360}%
+    \fi
+    \draw (#1,#2) arc (\cA:\cB:\cr);%
+}
+\newcommand\getCoord[3]{\newdimen{#1}\newdimen{#2}\pgfextractx{#1}{\pgfpointanchor{#3}{center}}\pgfextracty{#2}{\pgfpointanchor{#3}{center}}}
+
+\newcommand\qedshift{\vspace{-17pt}}
+\newcommand\fakeqed{\pushQED{\qed}\qedhere}
+
+\def\Xint#1{\mathchoice
+   {\XXint\displaystyle\textstyle{#1}}%
+   {\XXint\textstyle\scriptstyle{#1}}%
+   {\XXint\scriptstyle\scriptscriptstyle{#1}}%
+   {\XXint\scriptscriptstyle\scriptscriptstyle{#1}}%
+   \!\int}
+\def\XXint#1#2#3{{\setbox0=\hbox{$#1{#2#3}{\int}$}
+     \vcenter{\hbox{$#2#3$}}\kern-.5\wd0}}
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
+
+\newcommand\separator{{\centering\rule{2cm}{0.2pt}\vspace{2pt}\par}}
+
+\newenvironment{own}{\color{gray!70!black}}{}
+
+\newcommand\makecenter[1]{\raisebox{-0.5\height}{#1}}
+
+\mathchardef\mdash="2D
+
+\newenvironment{significant}{\begin{center}\begin{minipage}{0.9\textwidth}\centering\em}{\end{minipage}\end{center}}
+\DeclareRobustCommand{\rvdots}{%
+  \vbox{
+    \baselineskip4\p@\lineskiplimit\z@
+    \kern-\p@
+    \hbox{.}\hbox{.}\hbox{.}
+  }}
+\DeclareRobustCommand\tph[3]{{\texorpdfstring{#1}{#2}}}
+\makeatother
+
